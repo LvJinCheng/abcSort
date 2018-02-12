@@ -40,7 +40,7 @@ function ucfirst(l1){
 *****************************/
 
 
-//按拼音首字母排序 start
+//按拼音首字母排序（支持中英文混搭）
  
 function ABCSort(data){//参数:原始数据
     var arr=[],firstName;
@@ -71,16 +71,24 @@ function ABCSort(data){//参数:原始数据
 			if(data[j].sorts.toUpperCase()==dataSort[i].sorts){
 				dataSort[i].details.push(data[j]);
 			}
-    	}
+    		}
 	}
-	dataSort.sort((function(a,b){return a-b})());
+	for(var i = 0; i<dataSort.length-1; i++){
+		for(var j = 1; j<dataSort.length-i; j++){
+			if(dataSort[j-1].sorts > dataSort[j].sorts){
+				var a = dataSort[j];
+				dataSort[j] = dataSort[j - 1];
+				dataSort[j - 1] = a;
+			}
+		}
+	}
 
     return dataSort;
 }
 /********************************************/
 
-//按传入组名字段分类 start
- 
+//按照传入组名分类（不排序）
+	 
 function timeSort(data,teamStr){//参数1：原始数据；参数2：分类字段
 
 	var arr=[];
